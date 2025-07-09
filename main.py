@@ -91,13 +91,13 @@ def run_bot():
             addr = token["tokenAddress"]
             name = token.get("header", "") or token.get("url", "").split("/")[-1]
             chain = token.get("chainId", "").lower()
-
+            
             if addr in seen or chain != "solana":
                 continue
 
             if not any(k in name.lower() for k in MEME_KEYWORDS):
                 continue
-
+            print(f"🔍 Processing {name} ({addr})...")
             liquidity, volume, url = fetch_liquidity_and_volume(addr)
             if liquidity >= LIQ_THRESHOLD and volume >= VOLUME_THRESHOLD:
                 alert(name, addr, liquidity, url)
